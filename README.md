@@ -1,5 +1,5 @@
 # Memex
-
+<img width="819" height="400" alt="memex_caveat_feature_graphic" src="https://github.com/user-attachments/assets/883d518d-e0fe-430f-be94-2d3267e1c777" />
 A self-hosted personal link collection rendered as an animated mind map, with multi-view modes, sharing/federation, an Android companion app, and browser extension.
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
