@@ -1,5 +1,6 @@
 # Memex
 <img width="819" height="400" alt="memex_caveat_feature_graphic" src="https://github.com/user-attachments/assets/883d518d-e0fe-430f-be94-2d3267e1c777" />
+
 A self-hosted personal link collection rendered as an animated mind map, with multi-view modes, sharing/federation, an Android companion app, and browser extension.
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
@@ -8,22 +9,22 @@ A self-hosted personal link collection rendered as an animated mind map, with mu
 
 ## Features
 
-- 🗺 **Interactive Mind Map** — D3.js force-directed graph with zoom, pan, collapsible nodes
-- 📌 **Pinboard View** — Masonry card layout
-- ☁️ **Tag Cloud** — Weighted tag visualization
-- 📱 **Mobile Responsive** — Card grid with search, sort, pagination
-- 🔒 **Private Links** — Hide links from public view
-- 📂 **Collections** — Curated link groups
-- 👥 **Federation** — Connect friend instances, browse shared links (read-only)
-- 📊 **Analytics** — Click tracking, heatmaps, referrer stats
-- 🎭 **Themes** — 5 built-in color schemes
-- 📝 **Notes** — Markdown notes per link
-- 🩺 **Health Checker** — Auto-detect dead links
-- 📡 **RSS Feed** — Atom 1.0 syndication
-- 🤖 **Android App** — Share links from any app
-- 🧩 **Browser Extension** — Chrome + Firefox one-click save
-- 🔗 **QR Codes** — Generate for any link
-- ⚙️ **API Keys** — Programmatic access for scripts/bots
+-  **Interactive Mind Map** — D3.js force-directed graph with zoom, pan, collapsible nodes
+-  **Pinboard View** — Masonry card layout
+-  **Tag Cloud** — Weighted tag visualization
+-  **Mobile Responsive** — Card grid with search, sort, pagination
+-  **Private Links** — Hide links from public view
+-  **Collections** — Curated link groups
+-  **Federation** — Connect friend instances, browse shared links (read-only)
+-  **Analytics** — Click tracking, heatmaps, referrer stats
+-  **Themes** — 5 built-in color schemes
+-  **Notes** — Markdown notes per link
+-  **Health Checker** — Auto-detect dead links
+-  **RSS Feed** — Atom 1.0 syndication
+-  **Android App** — Share links from any app
+-  **Browser Extension** — Chrome + Firefox one-click save
+-  **QR Codes** — Generate for any link
+-  **API Keys** — Programmatic access for scripts/bots
 
 ## Quick Start
 
