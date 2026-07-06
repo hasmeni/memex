@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shared Links</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;padding:40px 20px}
+.container{max-width:800px;margin:0 auto}
+.header{text-align:center;margin-bottom:32px}
+.header h1{font-family:'Caveat',cursive;font-size:36px;color:#FF7A29}
+.header p{font-size:13px;color:#FFA35C;opacity:0.7;margin-top:4px}
+.meta{font-size:11px;color:#888;margin-top:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.card{background:rgba(255,122,41,0.06);border:1px solid rgba(255,122,41,0.2);border-radius:14px;padding:16px;text-decoration:none;color:#fff;display:block;transition:all 0.2s}
+.card:hover{background:rgba(255,122,41,0.12);border-color:rgba(255,122,41,0.5);transform:translateY(-2px)}
+.card-icon{font-size:22px;margin-bottom:8px}
+.card-title{font-family:'Caveat',cursive;font-size:18px;color:#FFA35C;font-weight:700}
+.card-desc{font-size:11px;color:#aaa;margin-top:4px}
+.card-cat{font-size:9px;color:rgba(255,163,92,0.5);text-transform:uppercase;margin-top:6px}
+.error{text-align:center;color:#f87171;font-size:14px;margin-top:60px}
+.loading{text-align:center;color:#FFA35C;font-size:14px;margin-top:60px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1 id="owner-name">Shared Links</h1>
+    <p id="share-info"></p>
+    <div class="meta" id="share-meta"></div>
+  </div>
+  <div id="content"><div class="loading">Loading shared links...</div></div>
+</div>
+<script>
+(async function() {
+  // Extract token from URL: /shared.html?token=xxx or /shared/xxx
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token') || window.location.pathname.split('/shared/')[1];
+
+  if (!token) {
+    document.getElementById('content').innerHTML = '<div class="error">No share token provided.</div>';
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/shared/${token}`);
+    if (!res.ok) {
+      document.getElementById('content').innerHTML = `<div class="error">Share not found or has been revoked.</div>`;
+      return;
+    }
+    const data = await res.json();
+
+    document.getElementById('owner-name').textContent = `${data.owner}'s Links`;
+    document.getElementById('share-info').textContent = data.share_name || '';
+    document.getElementById('share-meta').textContent = `${data.links.length} links · ${data.share_type}${data.target ? ': ' + data.target : ''}`;
+    document.title = `${data.owner} · Shared Links`;
+
+    if (data.links.length === 0) {
+      document.getElementById('content').innerHTML = '<div class="error">No links in this share.</div>';
+      return;
+    }
+
+    document.getElementById('content').innerHTML = '<div class="grid">' + data.links.map(l => `
+      <a class="card" href="${l.url}" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon">${l.icon || '🔗'}</div>
+        <div class="card-title">${l.title}</div>
+        ${l.description ? `<div class="card-desc">${l.description}</div>` : ''}
+        <div class="card-cat">${l.category}</div>
+      </a>
+    `).join('') + '</div>';
+  } catch(e) {
+    document.getElementById('content').innerHTML = `<div class="error">Error loading shared links: ${e.message}</div>`;
+  }
+})();
+</script>
+</body>
+</html>

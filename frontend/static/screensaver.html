@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memex · Screensaver</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Inter',sans-serif;color:#fff;cursor:none}
+#mindmap-canvas{position:fixed;inset:0;z-index:1;transition:transform 3s ease-in-out}
+#ss-clock{position:fixed;bottom:28px;right:36px;font-family:'Caveat',cursive;font-size:52px;color:rgba(255,122,41,0.35);z-index:10}
+#ss-brand{position:fixed;top:24px;left:32px;font-family:'Caveat',cursive;font-size:28px;color:rgba(255,122,41,0.2);z-index:10}
+#ss-exit{position:fixed;top:20px;right:20px;z-index:20;background:rgba(255,122,41,0.1);border:1px solid rgba(255,122,41,0.3);color:#FFA35C;border-radius:10px;padding:8px 16px;font-size:12px;cursor:pointer;opacity:0;transition:opacity 0.3s;text-decoration:none;font-family:'Inter',sans-serif}
+</style>
+</head>
+<body>
+<div id="mindmap-canvas"></div>
+<div id="ss-clock"></div>
+<div id="ss-brand">Memex</div>
+<a id="ss-exit" href="/">← Exit</a>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+const API='/api';
+let ORANGE='#FF7A29',ORANGE_LIGHT='#FFA35C';
+
+// Clock
+function updateClock(){document.getElementById('ss-clock').textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}
+setInterval(updateClock,1000);updateClock();
+
+// Mouse reveal exit
+let hideTimer;
+document.addEventListener('mousemove',()=>{
+  document.body.style.cursor='default';
+  const btn=document.getElementById('ss-exit');
+  btn.style.opacity='1';
+  clearTimeout(hideTimer);
+  hideTimer=setTimeout(()=>{btn.style.opacity='0';document.body.style.cursor='none'},3000);
+});
+
+// Auto drift
+let driftX=0,driftY=0,driftS=1,ddx=0.06,ddy=0.04,dds=0.0002;
+function drift(){
+  driftX+=ddx;driftY+=ddy;driftS+=dds;
+  if(Math.abs(driftX)>50)ddx*=-1;
+  if(Math.abs(driftY)>35)ddy*=-1;
+  if(driftS>1.12||driftS<0.9)dds*=-1;
+  const c=document.getElementById('mindmap-canvas');
+  if(c)c.style.transform=`translate(${driftX}px,${driftY}px) scale(${driftS})`;
+  requestAnimationFrame(drift);
+}
+setTimeout(drift,2000);
+
+// Render mind map (simplified version)
+async function init(){
+  try{
+    const[lr,tr]=await Promise.all([fetch(`${API}/links`),fetch(`${API}/settings/theme`)]);
+    const links=await lr.json();
+    if(tr.ok){const t=await tr.json();ORANGE=t.theme.accent||ORANGE;ORANGE_LIGHT=t.theme.accentLight||ORANGE_LIGHT}
+    renderMap(links);
+  }catch(e){console.warn(e)}
+}
+
+function renderMap(links){
+  const W=window.innerWidth,H=window.innerHeight;
+  const nodes=[{id:'__root__',type:'root'}];
+  const edges=[];
+  const cats=[...new Set(links.map(l=>l.category))];
+  cats.forEach(c=>{nodes.push({id:`cat__${c}`,type:'category',label:c});edges.push({source:'__root__',target:`cat__${c}`})});
+  links.forEach(l=>{nodes.push({id:`l__${l.id}`,type:'link',link:l});edges.push({source:`cat__${l.category}`,target:`l__${l.id}`})});
+
+  const svg=d3.select('#mindmap-canvas').append('svg').attr('width',W).attr('height',H);
+  const defs=svg.append('defs');
+  defs.append('filter').attr('id','glow').append('feGaussianBlur').attr('stdDeviation','3');
+
+  const sim=d3.forceSimulation(nodes)
+    .force('link',d3.forceLink(edges).id(d=>d.id).distance(140).strength(0.7))
+    .force('charge',d3.forceManyBody().strength(-280))
+    .force('center',d3.forceCenter(W/2,H/2))
+    .alphaDecay(0.02);
+
+  const edgeSel=svg.append('g').selectAll('line').data(edges).join('line')
+    .attr('stroke',ORANGE).attr('stroke-width',0.8).attr('stroke-opacity',0.2);
+
+  const nodeSel=svg.append('g').selectAll('g').data(nodes).join('g');
+  nodeSel.filter(d=>d.type==='root').append('circle').attr('r',30).attr('fill','none').attr('stroke',ORANGE).attr('stroke-width',2).attr('opacity',0.6);
+  nodeSel.filter(d=>d.type==='category').append('circle').attr('r',20).attr('fill','rgba(0,0,0,0.5)').attr('stroke',ORANGE).attr('stroke-width',1).attr('opacity',0.7);
+  nodeSel.filter(d=>d.type==='category').append('text').attr('text-anchor','middle').attr('dy','4px').attr('font-family','Caveat').attr('font-size','12px').attr('fill',ORANGE).text(d=>d.label?.slice(0,8)||'');
+  nodeSel.filter(d=>d.type==='link').append('circle').attr('r',14).attr('fill','rgba(10,10,10,0.7)').attr('stroke',ORANGE_LIGHT).attr('stroke-width',1).attr('opacity',0.8);
+  nodeSel.filter(d=>d.type==='link').append('text').attr('text-anchor','middle').attr('dy','4px').attr('font-size','11px').text(d=>d.link?.icon||'🔗');
+
+  sim.on('tick',()=>{
+    edgeSel.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    nodeSel.attr('transform',d=>`translate(${d.x},${d.y})`);
+  });
+}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:320px;font-family:-apple-system,sans-serif;background:#0a0a0a;color:#fff;padding:16px}
+h1{font-size:18px;color:#FF7A29;margin-bottom:12px;font-family:cursive}
+input,select{width:100%;background:#1a1a1a;border:1px solid rgba(255,122,41,0.3);border-radius:8px;padding:8px 10px;color:#fff;font-size:13px;margin-bottom:10px;outline:none}
+input:focus{border-color:#FF7A29}
+button{width:100%;padding:10px;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:500}
+.btn-save{background:#FF7A29;color:#000}
+.btn-save:hover{background:#FFA35C}
+.btn-settings{background:transparent;border:1px solid rgba(255,122,41,0.3);color:#FFA35C;margin-top:8px;font-size:12px}
+.status{font-size:12px;text-align:center;margin-top:8px;min-height:18px}
+.ok{color:#34d399}
+.err{color:#f87171}
+#setup{display:none}
+label{font-size:11px;color:#FFA35C;display:block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<h1>📌 Memex</h1>
+
+<div id="main-view">
+  <input type="text" id="title" placeholder="Title">
+  <input type="text" id="url" placeholder="URL" readonly>
+  <input type="text" id="category" placeholder="Category (optional)" value="General">
+  <input type="text" id="tags" placeholder="Tags (comma-separated)">
+  <button class="btn-save" id="saveBtn">Save Link</button>
+  <div class="status" id="status"></div>
+  <button class="btn-settings" id="showSetup">⚙ Settings</button>
+</div>
+
+<div id="setup">
+  <label>Server URL</label>
+  <input type="text" id="serverUrl" placeholder="https://yoursite.com">
+  <label>Admin Password</label>
+  <input type="password" id="password" placeholder="Password">
+  <button class="btn-save" id="connectBtn">Connect</button>
+  <div class="status" id="setupStatus"></div>
+  <button class="btn-settings" id="backBtn">← Back</button>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

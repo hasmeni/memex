@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head><title>Generate Extension Icons</title></head>
+<body>
+<p>Open this file in a browser, right-click each canvas, and "Save Image As" with the filename shown.</p>
+<script>
+[16, 48, 128].forEach(size => {
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  // Background
+  ctx.fillStyle = '#0a0a0a';
+  ctx.beginPath();
+  ctx.roundRect(0, 0, size, size, size * 0.15);
+  ctx.fill();
+  // Orange circle
+  ctx.fillStyle = '#FF7A29';
+  ctx.beginPath();
+  ctx.arc(size/2, size/2, size*0.35, 0, Math.PI*2);
+  ctx.fill();
+  // Link icon (chain)
+  ctx.fillStyle = '#fff';
+  ctx.font = `${size*0.4}px sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🔗', size/2, size/2);
+
+  const label = document.createElement('p');
+  label.textContent = `icon${size}.png`;
+  document.body.appendChild(label);
+  document.body.appendChild(canvas);
+});
+</script>
+</body>
+</html>

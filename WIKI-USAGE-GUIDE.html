@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ironyLabs Links Memex — Usage Guide</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#e0e0e0;line-height:1.7;padding:40px 20px}
+.container{max-width:900px;margin:0 auto}
+h1{font-size:32px;color:#FF7A29;margin-bottom:8px}
+h2{font-size:24px;color:#FFA35C;margin-top:48px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(255,122,41,0.2)}
+h3{font-size:18px;color:#FFA35C;margin-top:28px;margin-bottom:10px}
+p{margin-bottom:12px;color:#bbb}
+code{background:rgba(255,122,41,0.1);padding:2px 6px;border-radius:4px;font-size:14px;color:#FFA35C}
+pre{background:rgba(255,255,255,0.03);border:1px solid rgba(255,122,41,0.15);border-radius:10px;padding:16px;overflow-x:auto;margin:12px 0;font-size:13px;color:#ddd}
+table{width:100%;border-collapse:collapse;margin:16px 0}
+th,td{padding:10px 12px;border:1px solid rgba(255,122,41,0.15);text-align:left;font-size:13px}
+th{background:rgba(255,122,41,0.08);color:#FFA35C;font-weight:600}
+tr:hover{background:rgba(255,122,41,0.03)}
+kbd{background:rgba(255,122,41,0.12);border:1px solid rgba(255,122,41,0.3);border-radius:4px;padding:2px 6px;font-size:12px;color:#FFA35C}
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.badge-public{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.3)}
+.badge-admin{background:rgba(255,122,41,0.15);color:#FFA35C;border:1px solid rgba(255,122,41,0.3)}
+.subtitle{color:#888;font-size:14px;margin-bottom:32px}
+a{color:#FF7A29;text-decoration:none}
+a:hover{text-decoration:underline}
+.toc{background:rgba(255,122,41,0.04);border:1px solid rgba(255,122,41,0.15);border-radius:14px;padding:20px 24px;margin:24px 0}
+.toc ul{list-style:none;columns:2;column-gap:24px}
+.toc li{padding:3px 0;font-size:13px}
+.toc li a{color:#FFA35C}
+.section-badge{float:right;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>ironyLabs Links Memex</h1>
+<p class="subtitle">Complete Usage Guide — Generated 2026-07-04 14:20:00 UTC</p>
+
+<div class="toc">
+<strong style="color:#FFA35C">Table of Contents</strong>
+<ul>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#public-page">Public Page</a></li>
+<li><a href="#views">View Modes</a></li>
+<li><a href="#search">Search</a></li>
+<li><a href="#admin-login">Admin Login</a></li>
+<li><a href="#managing-links">Managing Links</a></li>
+<li><a href="#categories">Categories & Colors</a></li>
+<li><a href="#tags">Tags</a></li>
+<li><a href="#notes">Notes</a></li>
+<li><a href="#icons">Icons & Favicons</a></li>
+<li><a href="#themes">Themes</a></li>
+<li><a href="#analytics">Click Analytics</a></li>
+<li><a href="#health">Health Checker</a></li>
+<li><a href="#import-export">Import & Export</a></li>
+<li><a href="#private">Private Links</a></li>
+<li><a href="#reading-queue">Reading Queue</a></li>
+<li><a href="#collections">Collections</a></li>
+<li><a href="#rss">RSS Feed</a></li>
+<li><a href="#site-header">Site Header</a></li>
+<li><a href="#auto-archive">Auto-Archive</a></li>
+<li><a href="#qr-codes">QR Codes</a></li>
+<li><a href="#bookmarklet">Bookmarklet</a></li>
+<li><a href="#screensaver">Screensaver</a></li>
+<li><a href="#keyboard">Keyboard Shortcuts</a></li>
+<li><a href="#mobile">Mobile Usage</a></li>
+<li><a href="#android-app">Android Companion App</a></li>
+<li><a href="#standalone">Standalone Mode</a></li>
+<li><a href="#sharing">Sharing Links</a></li>
+<li><a href="#friends">Friends (Federation)</a></li>
+<li><a href="#browser-ext">Browser Extension</a></li>
+<li><a href="#api-keys-section">API Keys</a></li>
+<li><a href="#comments-section">Comments</a></li>
+<li><a href="#recent-changes">All Features by Phase</a></li>
+<li><a href="#troubleshooting">Troubleshooting & Quirks</a></li>
+</ul>
+</div>
+
+<h2 id="getting-started">Getting Started</h2>
+<p>ironyLabs Links Memex is a personal link collection displayed as an interactive mind map. Access it at:</p>
+<table>
+<tr><th>URL</th><th>Purpose</th></tr>
+<tr><td><code>http://localhost:8098</code></td><td>Public links page (mind map / pinboard / tag cloud)</td></tr>
+<tr><td><code>http://localhost:8098/admin.html</code></td><td>Admin panel (manage links)</td></tr>
+<tr><td><code>http://localhost:8098/screensaver.html</code></td><td>Screensaver mode</td></tr>
+<tr><td><code>http://localhost:8098/api/rss</code></td><td>RSS/Atom feed</td></tr>
+</table>
+<p><em>Note: Replace <code>8098</code> with your custom port if you changed <code>APP_PORT</code> in <code>.env</code>.</em></p>
+
+<h3>Configuration (.env file)</h3>
+<p>All settings are controlled from a single <code>.env</code> file. Copy from the template and edit:</p>
+<pre>
+cp .env.example .env
+nano .env
+</pre>
+<table>
+<tr><th>Variable</th><th>Default</th><th>Description</th></tr>
+<tr><td><code>ADMIN_PASSWORD</code></td><td><code>ironyLabs2024!</code></td><td>Admin login password</td></tr>
+<tr><td><code>SECRET_KEY</code></td><td><code>change_this...</code></td><td>JWT signing key (use a long random string)</td></tr>
+<tr><td><code>APP_PORT</code></td><td><code>8098</code></td><td>Port the app runs on</td></tr>
+</table>
+<p><strong>That's it.</strong> No other files need editing. Run <code>docker compose up -d --build</code> and the app uses your settings.</p>
+
+<h3>Changing the Port</h3>
+<p>To run on a different port (e.g. 9000), just edit <code>.env</code>:</p>
+<pre>APP_PORT=9000</pre>
+<p>Then restart: <code>docker compose down && docker compose up -d</code></p>
+<p>The port change applies to both the Docker gateway and the internal nginx listener automatically. No need to edit <code>docker-compose.yml</code> or nginx config files.</p>
+<p><strong>Android app:</strong> Not affected — the app asks you to enter the full URL including port (e.g. <code>http://yourserver:9000</code>), so it works with any port.</p>
+
+<h2 id="public-page">Public Page</h2>
+<p>The public page shows your links as a force-directed mind map. Links are organized by category — each category becomes a cluster node connected to the central hub.</p>
+<h3>Interacting with the Map</h3>
+<table>
+<tr><th>Action</th><th>Result</th></tr>
+<tr><td>Click a link node</td><td>Opens the URL in a new tab</td></tr>
+<tr><td>Hover a link node</td><td>Shows tooltip (title, description, tags, URL)</td></tr>
+<tr><td>Double-click a link node</td><td>Shows QR code for that link</td></tr>
+<tr><td>Right-click a link node</td><td>Opens the notes panel (if notes exist)</td></tr>
+<tr><td>Click a category node</td><td>Collapse/expand its children</td></tr>
+<tr><td>Drag a node</td><td>Reposition it on the canvas</td></tr>
+<tr><td>Scroll wheel</td><td>Zoom in/out</td></tr>
+<tr><td>Click + drag empty space</td><td>Pan the view</td></tr>
+<tr><td>Click ⟲ button (bottom-right)</td><td>Reset zoom to default</td></tr>
+</table>
+
+<h2 id="views">View Modes</h2>
+<p>The top-right toggle bar (<span class="badge badge-admin">Desktop only</span>) switches between 4 views:</p>
+<table>
+<tr><th>Button</th><th>View</th><th>Platform</th><th>Description</th></tr>
+<tr><td>🗺</td><td>Mind Map</td><td><span class="badge badge-admin">Desktop</span></td><td>Default force-directed graph</td></tr>
+<tr><td>📌</td><td>Pinboard</td><td><span class="badge badge-admin">Desktop</span></td><td>Masonry card layout with descriptions and tags</td></tr>
+<tr><td>☁️</td><td>Tag Cloud</td><td><span class="badge badge-admin">Desktop</span></td><td>Weighted tag visualization — click a tag to filter</td></tr>
+<tr><td>⎋</td><td>Screensaver</td><td><span class="badge badge-admin">Desktop</span></td><td>Opens the screensaver page</td></tr>
+</table>
+<p>Your view preference is saved in localStorage and persists across sessions.</p>
+<p><strong>Mobile equivalent:</strong> Mobile uses the card grid (always active below 640px) with 🏷 Tags button and 📂 Collections button for equivalent browsing.</p>
+
+<h2 id="search">Search</h2>
+<p><span class="badge badge-public">Public</span></p>
+<p>Press <kbd>Ctrl+K</kbd> or <kbd>/</kbd> to open the search overlay. On mobile, tap the 🔍 button (top-right).</p>
+<p>Search matches against: title, category, description, URL, and tags. Use arrow keys to navigate results, Enter to open.</p>
+
+<h2 id="admin-login">Admin Login</h2>
+<p>Navigate to <code>/admin.html</code>. Login with:</p>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li><strong>Username:</strong> admin</li>
+<li><strong>Password:</strong> whatever you set in <code>.env</code></li>
+</ul>
+<p>Sessions last 24 hours. The JWT is stored in localStorage.</p>
+
+<h2 id="managing-links">Managing Links</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<h3>Adding a Link</h3>
+<p>Fill in the form at the top of the admin panel:</p>
+<table>
+<tr><th>Field</th><th>Required</th><th>Description</th></tr>
+<tr><td>Title</td><td>Yes</td><td>Display name (max 120 chars)</td></tr>
+<tr><td>URL</td><td>Yes</td><td>Full URL including https://</td></tr>
+<tr><td>Category</td><td>No</td><td>Group name (defaults to "General")</td></tr>
+<tr><td>Icon</td><td>No</td><td>Emoji icon (defaults to 🔗)</td></tr>
+<tr><td>Description</td><td>No</td><td>Short description (240 chars)</td></tr>
+<tr><td>Tags</td><td>No</td><td>Comma-separated (e.g. "music, tools")</td></tr>
+<tr><td>Notes</td><td>No</td><td>Markdown-formatted long description</td></tr>
+<tr><td>Sort Order</td><td>No</td><td>Lower = closer to center on map</td></tr>
+<tr><td>Active</td><td>No</td><td>Uncheck to hide without deleting</td></tr>
+<tr><td>Featured</td><td>No</td><td>Larger node + "Link of the Day" eligible</td></tr>
+<tr><td>Custom Icon</td><td>No</td><td>Upload an image to override favicon/emoji</td></tr>
+</table>
+
+<h3>Editing / Deleting</h3>
+<p>Click <strong>Edit</strong> on any link row to load it into the form. Click <strong>Delete</strong> to permanently remove it.</p>
+
+<h3>Reordering</h3>
+<p>Drag the <code>⋮⋮</code> handle on any link row to change the order. New order saves automatically.</p>
+
+<h2 id="categories">Categories & Colors</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>Click <strong>🎨 Colors</strong> in the admin header. Each category shows:</p>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>A color picker — pick a color and it applies to the mind map node</li>
+<li>A file upload — upload a custom icon image for the category node</li>
+</ul>
+
+<h2 id="tags">Tags</h2>
+<p>Tags are comma-separated keywords you add to links. They enable:</p>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>Searching by tag</li>
+<li>Tag Cloud view (weighted visualization)</li>
+<li>Display in tooltips and pinboard cards</li>
+</ul>
+
+<h2 id="notes">Notes</h2>
+<p>Each link can have a markdown notes field. View notes:</p>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li><strong>Desktop:</strong> Right-click a link node → slide-out panel</li>
+<li><strong>Mobile:</strong> Long-press (600ms) a card → same panel</li>
+<li><strong>Pinboard:</strong> Right-click a card</li>
+</ul>
+<p>Notes support markdown: headings, bold, code, links, etc.</p>
+
+<h2 id="icons">Icons & Favicons</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>Icon priority (highest to lowest):</p>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Uploaded custom icon (via file upload in form)</li>
+<li>Auto-fetched favicon (via "🌐 Favicons" button)</li>
+<li>Emoji icon (typed in the Icon field)</li>
+<li>Default: 🔗</li>
+</ol>
+<p>Click <strong>🌐 Favicons</strong> to auto-fetch favicons for all links that don't have an icon.</p>
+
+<h2 id="themes">Themes</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>Click <strong>🎭 Theme</strong> to choose from 5 color schemes:</p>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>Dark Orange (default)</li>
+<li>Cyberpunk Blue</li>
+<li>Minimal Green</li>
+<li>Purple Haze</li>
+<li>Rose Gold</li>
+</ul>
+<p>The theme applies to the public page immediately (particles, nodes, glows, accents).</p>
+
+<h2 id="analytics">Click Analytics</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>Click <strong>📊 Stats</strong> to see:</p>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>Total clicks across all links</li>
+<li>Total link count</li>
+<li>Top 10 links by clicks (bar chart)</li>
+</ul>
+<p>Every click on the public page is tracked automatically.</p>
+
+<h2 id="health">Health Checker</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>Click <strong>🩺 Health Check</strong> to ping all active link URLs. Results show:</p>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li><span style="color:#34d399">● ok</span> — URL responded with 2xx/3xx</li>
+<li><span style="color:#f87171">● error:404</span> — URL returned error status</li>
+<li><span style="color:#fbbf24">● timeout</span> — No response within 10 seconds</li>
+</ul>
+<p>If Auto-Archive is enabled, links that fail 3 consecutive times are automatically deactivated.</p>
+
+<h2 id="import-export">Import & Export</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<h3>JSON Export/Import</h3>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li><strong>⬇ Export:</strong> Downloads all links as a JSON file</li>
+<li><strong>⬆ Import:</strong> Upload a JSON file with <code>{"links":[...]}</code> structure</li>
+</ul>
+<h3>Browser Bookmarks Import</h3>
+<p>In the ⚙️ Settings panel, use "Import Browser Bookmarks" to upload a Chrome/Firefox bookmark export (.html file). Folder names become categories.</p>
+
+<h2 id="private">Private Links</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>Click the 🔒 button on any link row to toggle private status. Private links:</p>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>Are hidden from the public page, RSS feed, and reading queue</li>
+<li>Still visible and manageable in the admin panel</li>
+<li>Click 🔓 to make public again</li>
+</ul>
+
+<h2 id="reading-queue">Reading Queue</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>Use the dropdown on each link row to set read status:</p>
+<table>
+<tr><th>Status</th><th>Meaning</th></tr>
+<tr><td>—</td><td>No read status (default)</td></tr>
+<tr><td>To Read</td><td>Added to reading queue</td></tr>
+<tr><td>Reading</td><td>Currently reading</td></tr>
+<tr><td>Done</td><td>Finished reading</td></tr>
+</table>
+<p>Public endpoint: <code>/api/reading-queue</code> returns links marked to-read or reading.</p>
+
+<h2 id="collections">Collections</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>Click <strong>📂 Collections</strong> to create curated groups of links.</p>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Enter a name, slug (URL-friendly), and optional description</li>
+<li>Click "Create"</li>
+<li>Add links to collections via the API: <code>POST /api/admin/collections/{id}/links</code></li>
+</ol>
+<p>Public access: <code>/api/collections/{slug}</code> returns the collection with its links.</p>
+
+<h2 id="rss">RSS Feed</h2>
+<p><span class="badge badge-public">Public</span></p>
+<p>Subscribe to your links via any RSS reader:</p>
+<pre>http://localhost:8098/api/rss</pre>
+<p>Returns Atom 1.0 XML with the last 50 active, non-private links.</p>
+
+<h2 id="site-header">Site Header</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>In ⚙️ Settings, configure:</p>
+<table>
+<tr><th>Field</th><th>Effect</th></tr>
+<tr><td>Site Name</td><td>Shown in header strip + page title + RSS feed</td></tr>
+<tr><td>Avatar</td><td>Emoji shown before site name</td></tr>
+<tr><td>Bio</td><td>Short tagline next to name</td></tr>
+<tr><td>Social Links</td><td>JSON object (for future use)</td></tr>
+</table>
+
+<h2 id="auto-archive">Auto-Archive</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>In ⚙️ Settings, check "Auto-archive after 3 failures". When enabled:</p>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>Each health check increments <code>dead_count</code> for failing links</li>
+<li>Resets to 0 when a link responds successfully</li>
+<li>At 3 consecutive failures, the link is automatically set to inactive</li>
+</ul>
+
+<h2 id="qr-codes">QR Codes</h2>
+<table>
+<tr><th>Where</th><th>How</th></tr>
+<tr><td>Public page (desktop)</td><td>Double-click any link node</td></tr>
+<tr><td>Admin panel</td><td>Click "QR" button on any link row</td></tr>
+</table>
+<p>QR codes are generated in the accent color (#FF7A29) and can be scanned with any phone camera.</p>
+
+<h2 id="bookmarklet">Bookmarklet</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>In ⚙️ Settings, find the "📌 Add to ironyLabs" button. Drag it to your browser's bookmarks bar.</p>
+<p>Then on any webpage, click the bookmarklet to instantly add that page to your links collection. It will prompt for a title and save via API.</p>
+<p><strong>Note:</strong> The bookmarklet embeds your JWT token. It expires after 24 hours — re-login and rebuild from the Settings panel.</p>
+
+<h2 id="screensaver">Screensaver</h2>
+<p><span class="badge badge-public">Public</span></p>
+<p>Access via the ⎋ button in the view toggle, or directly at <code>/screensaver.html</code>.</p>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>Full-screen mind map with slow auto-drift animation</li>
+<li>Clock display (bottom-right)</li>
+<li>ironyLabs branding (top-left, subtle)</li>
+<li>Move your mouse to reveal the "← Exit" button (auto-hides after 3s)</li>
+</ul>
+
+<h2 id="keyboard">Keyboard Shortcuts</h2>
+<table>
+<tr><th>Shortcut</th><th>Action</th><th>Where</th></tr>
+<tr><td><kbd>Ctrl+K</kbd></td><td>Open search</td><td>Public page</td></tr>
+<tr><td><kbd>/</kbd></td><td>Open search</td><td>Public page</td></tr>
+<tr><td><kbd>ESC</kbd></td><td>Close search / notes panel</td><td>Public page</td></tr>
+<tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>Navigate search results</td><td>Search overlay</td></tr>
+<tr><td><kbd>Enter</kbd></td><td>Open selected result</td><td>Search overlay</td></tr>
+<tr><td>Scroll wheel</td><td>Zoom mind map</td><td>Public page</td></tr>
+</table>
+
+<h2 id="mobile">Mobile Usage</h2>
+<p>On viewports below 640px, the mind map is replaced with a card grid.</p>
+
+<h3>Mobile-Specific Features</h3>
+<table>
+<tr><th>Feature</th><th>How to Access</th></tr>
+<tr><td>Card Grid (replaces mind map)</td><td>Automatic below 640px</td></tr>
+<tr><td>Search</td><td>Tap 🔍 button (top-right)</td></tr>
+<tr><td>Category Filter</td><td>Sticky bar at top</td></tr>
+<tr><td>Sort (Default/A–Z/Popular/Recent)</td><td>Sort buttons below categories</td></tr>
+<tr><td>Tag Filter</td><td>Tap "🏷 Tags" → select a tag to filter cards</td></tr>
+<tr><td>Collections Browser</td><td>Tap "📂 Collections" → select a collection</td></tr>
+<tr><td>Pagination</td><td>"Show more" button (loads 15 at a time)</td></tr>
+<tr><td>Alphabetical Jump</td><td>A–Z strip on right edge</td></tr>
+<tr><td>Notes Panel</td><td>Long-press a card (600ms)</td></tr>
+<tr><td>NEW / Featured Badges</td><td>Shown on cards automatically</td></tr>
+</table>
+
+<h3>Gestures</h3>
+<table>
+<tr><th>Gesture</th><th>Action</th></tr>
+<tr><td>Tap card</td><td>Open link</td></tr>
+<tr><td>Long-press card (600ms)</td><td>Open notes panel</td></tr>
+<tr><td>Tap 🔍 button</td><td>Open search overlay</td></tr>
+<tr><td>Tap category button</td><td>Filter by category</td></tr>
+<tr><td>Tap sort button</td><td>Change sort order</td></tr>
+<tr><td>Tap 🏷 Tags</td><td>Show/hide tag filter pills</td></tr>
+<tr><td>Tap 📂 Collections</td><td>Show/hide collection pills</td></tr>
+<tr><td>Tap "Show more"</td><td>Load next 15 cards</td></tr>
+<tr><td>Tap A–Z letter (right edge)</td><td>Jump to that section</td></tr>
+</table>
+
+<h3>Platform Availability Matrix</h3>
+<table>
+<tr><th>Feature</th><th>Desktop</th><th>Mobile</th></tr>
+<tr><td>Mind Map</td><td>✅</td><td>❌ (card grid instead)</td></tr>
+<tr><td>Pinboard View</td><td>✅</td><td>❌ (card grid equivalent)</td></tr>
+<tr><td>Tag Cloud View</td><td>✅</td><td>❌ (🏷 tag filter instead)</td></tr>
+<tr><td>Tag Filter (pills)</td><td>❌</td><td>✅</td></tr>
+<tr><td>Collections Browser</td><td>API only</td><td>✅ (📂 button)</td></tr>
+<tr><td>Card Grid + Pagination</td><td>❌</td><td>✅</td></tr>
+<tr><td>Sort Toggle (4 modes)</td><td>❌</td><td>✅</td></tr>
+<tr><td>A–Z Jump Navigation</td><td>❌</td><td>✅</td></tr>
+<tr><td>Sticky Category Bar</td><td>❌</td><td>✅</td></tr>
+<tr><td>Search (Ctrl+K)</td><td>✅</td><td>✅ (🔍 button)</td></tr>
+<tr><td>Notes Panel</td><td>✅ (right-click)</td><td>✅ (long-press)</td></tr>
+<tr><td>QR Code</td><td>✅ (double-click)</td><td>❌</td></tr>
+<tr><td>Zoom + Pan</td><td>✅</td><td>❌</td></tr>
+<tr><td>Collapsible Categories</td><td>✅</td><td>❌</td></tr>
+<tr><td>Screensaver</td><td>✅</td><td>⚠️ (works but not ideal)</td></tr>
+<tr><td>Link of the Day</td><td>✅</td><td>❌</td></tr>
+<tr><td>View Toggle</td><td>✅</td><td>❌</td></tr>
+<tr><td>Site Header Strip</td><td>✅</td><td>❌</td></tr>
+<tr><td>Reading Queue Badges</td><td>✅ (pinboard)</td><td>✅ (cards)</td></tr>
+<tr><td>NEW / Featured Badges</td><td>✅</td><td>✅</td></tr>
+<tr><td>Private Links</td><td>✅ (server-side)</td><td>✅ (server-side)</td></tr>
+<tr><td>RSS Feed</td><td>✅ (URL)</td><td>✅ (URL)</td></tr>
+<tr><td>Bookmarklet</td><td>✅</td><td>⚠️ (limited browser support)</td></tr>
+<tr><td>Admin Panel</td><td>✅</td><td>✅ (responsive)</td></tr>
+<tr><td>Share Links (create)</td><td>✅ (admin)</td><td>✅ (admin)</td></tr>
+<tr><td>Share Viewer (read)</td><td>✅</td><td>✅</td></tr>
+<tr><td>Friends (add/manage)</td><td>✅ (admin)</td><td>✅ (admin)</td></tr>
+<tr><td>Friends (browse)</td><td>✅ (API)</td><td>✅ (API)</td></tr>
+</table>
+
+<hr style="margin:48px 0;border:none;border-top:1px solid rgba(255,122,41,0.15)">
+
+<h2 id="android-app">Android Companion App</h2>
+<p><span class="badge badge-public">Mobile</span></p>
+<p>The <strong>Memex Share</strong> Android app lets you save links from any app directly to your server using Android's share sheet.</p>
+
+<h3>Installation</h3>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Transfer <code>Memex-Share-debug.apk</code> to your Android device</li>
+<li>Open it and allow "Install from unknown sources" when prompted</li>
+<li>The app appears as "Memex Share" in your app drawer</li>
+</ol>
+
+<h3>Setup</h3>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Open the app</li>
+<li>Enter your server URL (e.g. <code>http://192.168.1.100:8098</code> or <code>https://yourdomain.com</code>)</li>
+<li>Enter your admin password</li>
+<li>Tap "Connect" — you should see "✓ Connected"</li>
+</ol>
+
+<h3>Sharing Links</h3>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Browse any page in Chrome, YouTube, Twitter, etc.</li>
+<li>Tap the Share button (in any app)</li>
+<li>Select "Save to ironyLabs" from the share sheet</li>
+<li>Edit the title/category if needed</li>
+<li>Tap "Save" — link is instantly added to your server</li>
+</ol>
+
+<h3>Features</h3>
+<table>
+<tr><th>Feature</th><th>Details</th></tr>
+<tr><td>Share Intent Receiver</td><td>Catches any shared text/URL from any Android app</td></tr>
+<tr><td>URL Extraction</td><td>Automatically extracts URLs from shared text</td></tr>
+<tr><td>Title Pre-fill</td><td>Uses the shared subject or extracts from URL</td></tr>
+<tr><td>Category Selection</td><td>Type a category name (defaults to "General")</td></tr>
+<tr><td>Server Configuration</td><td>Enter any server URL (local IP, domain, etc.)</td></tr>
+<tr><td>JWT Authentication</td><td>Stores token after login (24h expiry)</td></tr>
+<tr><td>HTTP + HTTPS Support</td><td>Works with both (cleartext allowed for local dev)</td></tr>
+<tr><td>Offline Queue</td><td>If server is unreachable, links are saved locally and auto-synced later</td></tr>
+<tr><td>Auto-Sync on Open</td><td>Queued links sync automatically when you open the app</td></tr>
+<tr><td>Auto-Sync on Reconnect</td><td>After re-authenticating, all queued links are pushed to server</td></tr>
+<tr><td>Queue Status Indicator</td><td>Main screen shows pending count in yellow when links are queued</td></tr>
+<tr><td>Persistent Storage</td><td>Queue survives app close, force stop, and phone restart</td></tr>
+</table>
+
+<h3>Offline Queue Behavior</h3>
+<table>
+<tr><th>Scenario</th><th>What Happens</th></tr>
+<tr><td>Share link + server reachable</td><td>Saves immediately, toast "✓ Saved"</td></tr>
+<tr><td>Share link + server unreachable</td><td>Queued locally, toast "⏳ Queued offline (N pending)"</td></tr>
+<tr><td>Share link + token expired</td><td>Queued locally (same as unreachable)</td></tr>
+<tr><td>Open app + queue has items</td><td>Auto-syncs all queued links, toast "✓ Synced N links"</td></tr>
+<tr><td>Tap Connect + queue has items</td><td>After successful login, immediately syncs queue</td></tr>
+<tr><td>Phone offline for days</td><td>Links stay in queue indefinitely until synced</td></tr>
+</table>
+
+<h3>Troubleshooting</h3>
+<table>
+<tr><th>Issue</th><th>Fix</th></tr>
+<tr><td>"Connection failed"</td><td>Check server URL, ensure port is correct, verify server is running</td></tr>
+<tr><td>"Session expired"</td><td>Re-open the app and tap Connect again</td></tr>
+<tr><td>"Login failed (401)"</td><td>Wrong password — check your .env file on the server</td></tr>
+<tr><td>App not in share sheet</td><td>Restart phone, or check app permissions</td></tr>
+<tr><td>Can't connect to local IP</td><td>Phone must be on same WiFi network as server</td></tr>
+</table>
+
+<h3>Building the APK from Source</h3>
+<p>The Android source code is in the <code>android/</code> folder of the project. You can build it yourself if you want to modify the app or don't trust pre-built APKs.</p>
+
+<h4>Requirements</h4>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>Java JDK 17+ (OpenJDK recommended)</li>
+<li>Android SDK (install via <a href="https://developer.android.com/studio" style="color:#FF7A29">Android Studio</a> or command-line tools)</li>
+<li>Android SDK Platform 35 (install via SDK Manager)</li>
+<li>Android Build Tools 35.0.1+</li>
+</ul>
+
+<h4>Option A: Command Line (no Android Studio)</h4>
+<pre>
+# Set ANDROID_HOME to your SDK location
+# Windows:
+set ANDROID_HOME=%LOCALAPPDATA%\Android\Sdk
+
+# Navigate to the android folder
+cd android
+
+# Build debug APK
+gradlew.bat assembleDebug
+
+# APK output location:
+# android/app/build/outputs/apk/debug/app-debug.apk
+</pre>
+
+<h4>Option B: Android Studio</h4>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Open Android Studio</li>
+<li>File → Open → select the <code>android/</code> folder</li>
+<li>Wait for Gradle sync to complete</li>
+<li>Build → Build Bundle(s) / APK(s) → Build APK(s)</li>
+<li>APK appears in <code>android/app/build/outputs/apk/debug/</code></li>
+</ol>
+
+<h4>Installing the APK</h4>
+<pre>
+# Via ADB (phone connected via USB with USB debugging enabled):
+adb install app/build/outputs/apk/debug/app-debug.apk
+
+# Or transfer the APK to your phone and open it
+</pre>
+
+<h4>Source Structure</h4>
+<pre>
+android/
+├── app/src/main/
+│   ├── AndroidManifest.xml          # App config + share intent filter
+│   ├── java/com/ironylabs/linkshare/
+│   │   ├── MainActivity.kt          # Settings/connect screen
+│   │   ├── ShareReceiverActivity.kt # Share intent handler
+│   │   ├── ApiClient.kt             # HTTP requests to server
+│   │   ├── AppPrefs.kt              # SharedPreferences wrapper
+│   │   └── LinkQueue.kt             # Offline queue storage
+│   └── res/
+│       ├── layout/activity_main.xml  # Settings UI
+│       ├── layout/activity_share.xml # Share dialog UI
+│       ├── values/themes.xml         # Dark orange theme
+│       └── xml/network_security_config.xml # Allow HTTP for dev
+├── build.gradle.kts                  # App dependencies
+├── gradle/wrapper/                   # Gradle wrapper (auto-downloads Gradle)
+└── gradlew.bat                       # Build script (Windows)
+</pre>
+
+<h4>Customizing the App</h4>
+<table>
+<tr><th>Want to change</th><th>Edit this file</th></tr>
+<tr><td>App name</td><td><code>res/values/strings.xml</code></td></tr>
+<tr><td>Colors/theme</td><td><code>res/values/themes.xml</code></td></tr>
+<tr><td>Default server URL</td><td><code>res/layout/activity_main.xml</code> (the EditText default value)</td></tr>
+<tr><td>Package name</td><td><code>app/build.gradle.kts</code> → <code>applicationId</code></td></tr>
+<tr><td>Minimum Android version</td><td><code>app/build.gradle.kts</code> → <code>minSdk</code> (currently 26 = Android 8.0)</td></tr>
+</table>
+
+<h2 id="standalone">Standalone Mode (No Docker)</h2>
+<p>Run the full application without Docker — just Python. <strong>Status: Experimental.</strong> Docker Compose is the recommended and fully tested deployment method.</p>
+
+<h3>Requirements</h3>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li><strong>Python 3.10, 3.11, or 3.12</strong> (recommended)</li>
+<li>No Docker needed</li>
+<li>pip (comes with Python)</li>
+</ul>
+
+<h3>Quick Start (Windows)</h3>
+<pre>
+# Double-click start-standalone.bat
+# OR manually:
+cd standalone
+pip install -r requirements.txt
+python run.py
+</pre>
+<p>The app starts at <code>http://127.0.0.1:8098</code> and opens your browser automatically.</p>
+
+<h3>Quick Start (Linux/Mac)</h3>
+<pre>
+cd standalone
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python run.py
+</pre>
+
+<h3>How It Works</h3>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>Same backend code as Docker version (main.py)</li>
+<li>SQLite database stored in <code>standalone/data/links.db</code></li>
+<li>Uploads stored in <code>standalone/data/uploads/</code></li>
+<li>Frontend served by FastAPI directly (no Nginx needed)</li>
+<li>Single process, single port</li>
+<li>Auto-opens browser on startup</li>
+</ul>
+
+<h3>Known Issues & Python Compatibility</h3>
+<table>
+<tr><th>Issue</th><th>Cause</th><th>Fix</th></tr>
+<tr><td><strong>Python 3.13+ fails to install dependencies</strong></td><td><code>pydantic-core</code> requires Rust compilation on 3.13 and may fail if Rust toolchain isn't installed</td><td>Use <strong>Python 3.11 or 3.12</strong> instead. These have pre-built binary wheels for all dependencies</td></tr>
+<tr><td>Build error mentioning "PyO3" or "maturin"</td><td>Same as above — pydantic-core can't find compatible wheel for your Python version</td><td>Downgrade to Python 3.11 or 3.12</td></tr>
+<tr><td>Module not found errors</td><td>Running <code>python run.py</code> from wrong directory</td><td>Must run from the project root (not from inside <code>standalone/</code>)</td></tr>
+<tr><td>Port already in use</td><td>Docker instance or another app on port 8098</td><td>Stop Docker first (<code>docker compose down</code>) or set <code>PORT=9000</code> env var</td></tr>
+</table>
+
+<h3>Testing Standalone Mode</h3>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Ensure Docker is stopped: <code>docker compose down</code> (frees port 8098)</li>
+<li>Run <code>start-standalone.bat</code> (Windows) or the manual steps above</li>
+<li>Browser should open to <code>http://127.0.0.1:8098</code></li>
+<li>Login with the default password (set via <code>ADMIN_PASSWORD</code> env var, defaults to <code>ironyLabs2024!</code>)</li>
+<li>Add a link, verify it appears on the public page</li>
+<li>Press Ctrl+C in the terminal to stop</li>
+</ol>
+
+<h3>When to Use Standalone vs Docker</h3>
+<table>
+<tr><th>Use Standalone When</th><th>Use Docker When</th></tr>
+<tr><td>Quick local testing</td><td>Production deployment on VPS</td></tr>
+<tr><td>No Docker installed on machine</td><td>Want isolated containers</td></tr>
+<tr><td>Windows desktop personal use</td><td>Need reverse proxy (Nginx)</td></tr>
+<tr><td>Developing/modifying the code</td><td>Want persistent named volumes</td></tr>
+<tr><td>Temporary demo</td><td>Running 24/7 on a server</td></tr>
+</table>
+
+<p><strong>Note:</strong> Standalone mode has not been fully end-to-end tested in production. If you encounter issues, Docker Compose is the reliable path. Data between standalone and Docker modes is separate (different database files).</p>
+
+<h3>Deployment Methods Comparison</h3>
+<table>
+<tr><th>Method</th><th>Docker?</th><th>Best For</th><th>Data Location</th><th>Status</th></tr>
+<tr><td>Docker Compose</td><td>Yes</td><td>VPS deployment, production</td><td>Docker named volume</td><td>✅ Fully tested</td></tr>
+<tr><td>Standalone (Python)</td><td>No</td><td>Local dev, quick testing, Windows desktop</td><td><code>standalone/data/</code></td><td>⚠️ Experimental</td></tr>
+<tr><td>Android App</td><td>N/A</td><td>Saving links on-the-go from any app</td><td>Connects to either of the above</td><td>✅ Fully tested</td></tr>
+</table>
+
+<h2 id="browser-ext">Browser Extension (Chrome/Edge/Firefox)</h2>
+<p><span class="badge badge-admin">Desktop</span></p>
+<p>A one-click browser extension for saving links without opening the admin panel. Works in Chrome, Edge, Brave, and Firefox.</p>
+
+<h3>Installation — Chrome / Edge / Brave</h3>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Open <code>chrome://extensions/</code> (or <code>edge://extensions/</code>)</li>
+<li>Enable <strong>Developer mode</strong> (toggle in top-right corner)</li>
+<li>Click <strong>"Load unpacked"</strong></li>
+<li>Select the <code>browser-extension/</code> folder from this project</li>
+<li>The 📌 icon appears in your browser toolbar</li>
+</ol>
+
+<h3>Installation — Firefox</h3>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Open <code>about:debugging#/runtime/this-firefox</code></li>
+<li>Click <strong>"Load Temporary Add-on..."</strong></li>
+<li>Navigate to the <code>browser-extension/</code> folder and select <code>manifest.json</code></li>
+<li>The 📌 icon appears in your toolbar</li>
+</ol>
+<p><strong>Note:</strong> Temporary add-ons in Firefox are removed when the browser closes. For permanent installation, submit to <a href="https://addons.mozilla.org" style="color:#FF7A29">addons.mozilla.org</a> or use <a href="https://extensionworkshop.com/documentation/develop/getting-started-with-web-ext/" style="color:#FF7A29">web-ext</a> for unsigned install.</p>
+
+<h3>First-Time Setup</h3>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Click the extension icon → click <strong>"⚙ Settings"</strong></li>
+<li>Enter your server URL (e.g. <code>https://yoursite.com</code> or <code>http://localhost:8098</code>)</li>
+<li>Enter your admin password</li>
+<li>Click <strong>"Connect"</strong> — should show "✓ Connected!"</li>
+</ol>
+
+<h3>Saving a Link</h3>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Navigate to any page you want to save</li>
+<li>Click the 📌 extension icon</li>
+<li>Title and URL are pre-filled from the current tab</li>
+<li>Optionally edit category and add tags</li>
+<li>Click <strong>"Save Link"</strong></li>
+</ol>
+
+<h3>Features</h3>
+<table>
+<tr><th>Feature</th><th>Details</th></tr>
+<tr><td>Auto-fill</td><td>Title and URL grabbed from current tab automatically</td></tr>
+<tr><td>Duplicate detection</td><td>Shows warning if URL already exists</td></tr>
+<tr><td>Category + Tags</td><td>Set on save (defaults to "General")</td></tr>
+<tr><td>Session persistence</td><td>Token saved in chrome.storage (survives browser restart)</td></tr>
+<tr><td>Works with any instance</td><td>Enter any server URL — local or remote</td></tr>
+</table>
+
+<h2 id="api-keys-section">API Keys (Programmatic Access)</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>Create API keys for scripts, bots, or automation tools to add links without using the admin JWT.</p>
+
+<h3>Creating a Key</h3>
+<p>Admin panel or API: <code>POST /api/admin/api-keys</code> with <code>{"name":"My Bot"}</code>. Returns the key (shown once — save it).</p>
+
+<h3>Using a Key</h3>
+<pre>
+POST /api/api-key/links
+Header: X-API-Key: your_key_here
+Body: {"title": "Example", "url": "https://example.com", "category": "Tools"}
+</pre>
+<p>API keys have the same duplicate detection as admin. They can only create links (no edit/delete/settings).</p>
+
+<h3>Managing Keys</h3>
+<table>
+<tr><th>Action</th><th>Endpoint</th></tr>
+<tr><td>List keys</td><td><code>GET /api/admin/api-keys</code> (shows first 8 chars only)</td></tr>
+<tr><td>Revoke key</td><td><code>DELETE /api/admin/api-keys/{id}</code></td></tr>
+</table>
+
+<h2 id="comments-section">Comments</h2>
+<p><span class="badge badge-public">Public</span></p>
+<p>Visitors can leave comments on links (anonymous or named). Admin controls whether comments are enabled.</p>
+
+<h3>Adding a Comment (Public)</h3>
+<pre>
+POST /api/links/{id}/comments
+Body: {"text": "Great resource!", "author": "Alice"}
+</pre>
+<p>Author defaults to "Anonymous" if omitted. Max 500 characters.</p>
+
+<h3>Viewing Comments</h3>
+<pre>GET /api/links/{id}/comments</pre>
+<p>Returns last 50 comments for that link, newest first.</p>
+
+<h3>Admin Controls</h3>
+<table>
+<tr><th>Action</th><th>How</th></tr>
+<tr><td>Delete a comment</td><td><code>DELETE /api/admin/comments/{id}</code></td></tr>
+<tr><td>Disable comments globally</td><td><code>PUT /api/admin/settings/comments</code> with <code>{"enabled": false}</code></td></tr>
+<tr><td>Re-enable comments</td><td><code>PUT /api/admin/settings/comments</code> with <code>{"enabled": true}</code></td></tr>
+</table>
+
+<h2 id="sharing">Sharing Links (Private Share URLs)</h2>
+<p><span class="badge badge-admin">Admin</span> · <span class="badge badge-public">Recipients: No login needed</span></p>
+<p>Create private, read-only share links that let anyone view a subset of your links without an account.</p>
+
+<h3>Creating a Share</h3>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Open admin panel → click <strong>🔗 Shares</strong></li>
+<li>Enter a name (e.g. "My Music Links")</li>
+<li>Choose scope:
+  <ul style="margin:4px 0 4px 16px">
+    <li><strong>All Public Links</strong> — shares everything that's active + non-private</li>
+    <li><strong>Category</strong> — shares only links in a specific category (enter category name in target field)</li>
+    <li><strong>Collection</strong> — shares only links in a specific collection (enter collection slug)</li>
+  </ul>
+</li>
+<li>Click <strong>Create Share</strong></li>
+<li>Copy the generated URL and send it to your friend</li>
+</ol>
+
+<h3>Share URL Format</h3>
+<pre>https://yoursite.com/shared.html?token=ESbiZ0029Lm11mzY24Uy16MU6UjlLV2oNBwca0c52UY</pre>
+<p>Anyone who opens this URL sees a read-only card grid of the shared links. No login, no account needed.</p>
+
+<h3>Managing Shares</h3>
+<table>
+<tr><th>Action</th><th>How</th></tr>
+<tr><td>View all shares</td><td>Admin → 🔗 Shares</td></tr>
+<tr><td>Copy share URL</td><td>Click the URL field (auto-copies)</td></tr>
+<tr><td>Revoke access</td><td>Click "Revoke" — link stops working immediately</td></tr>
+<tr><td>Create scoped share</td><td>Set type to "Category" or "Collection" + enter target name</td></tr>
+</table>
+
+<h3>What Recipients See</h3>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>A dark-themed card grid showing link icons, titles, descriptions, and categories</li>
+<li>Click any card to open the link in a new tab</li>
+<li>The page shows the owner name, share name, and link count</li>
+<li>No admin access, no ability to edit or delete anything</li>
+</ul>
+
+<h3>Security</h3>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>Share tokens are 32-character cryptographically random strings</li>
+<li>Tokens are unguessable — only people you give the URL to can access it</li>
+<li>Private links are <strong>never</strong> included in shares (double-filtered server-side)</li>
+<li>Revoking a share immediately removes access — no caching</li>
+</ul>
+
+<h2 id="friends">Friends (Federated Read-Only Browsing)</h2>
+<p><span class="badge badge-admin">Admin</span></p>
+<p>Connect to friends who also run ironyLabs and browse their shared links directly from your instance.</p>
+
+<h3>Prerequisites</h3>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li>Your friend must have their own ironyLabs instance running (on their VPS)</li>
+<li>Your friend must create a share and give you: their server URL + share token</li>
+</ul>
+
+<h3>Adding a Friend</h3>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Open admin panel → click <strong>👥 Friends</strong></li>
+<li>Enter their display name (e.g. "Alice")</li>
+<li>Enter their instance URL (e.g. <code>https://alice-links.com</code>)</li>
+<li>Enter the share token they gave you</li>
+<li>Click <strong>Add Friend</strong></li>
+<li>Click <strong>Test</strong> to verify the connection works</li>
+</ol>
+
+<h3>How It Works (Technical)</h3>
+<pre>
+Your browser → Your server: GET /api/friends/1/links
+Your server → Friend's server: GET /api/shared/{token}
+Friend's server → Your server: { owner: "Alice", links: [...] }
+Your server → Your browser: renders friend's links
+</pre>
+<p>Your server acts as a proxy — this avoids CORS issues and keeps the friend's token private (never exposed to the browser).</p>
+
+<h3>Browsing Friend's Links</h3>
+<table>
+<tr><th>Access Method</th><th>How</th></tr>
+<tr><td>Via API</td><td><code>GET /api/friends/{id}/links</code> — returns friend's shared links as JSON</td></tr>
+<tr><td>Via Admin</td><td>"Test" button shows link count from friend</td></tr>
+<tr><td>Via Public Page</td><td>Future: friend nodes on mind map (planned enhancement)</td></tr>
+</table>
+
+<h3>Example: Full Flow Between Two People</h3>
+<table>
+<tr><th>Step</th><th>Who</th><th>Action</th></tr>
+<tr><td>1</td><td>You</td><td>Create a share → get token <code>abc123</code></td></tr>
+<tr><td>2</td><td>You</td><td>Send friend: "My URL is <code>https://mysite.com</code>, token is <code>abc123</code>"</td></tr>
+<tr><td>3</td><td>Friend</td><td>In their admin → 👥 Friends → adds your URL + token</td></tr>
+<tr><td>4</td><td>Friend</td><td>Clicks "Test" → sees "✓ Got 15 links from ironyLabs"</td></tr>
+<tr><td>5</td><td>Friend</td><td>Creates their own share → gives you their token</td></tr>
+<tr><td>6</td><td>You</td><td>Add them as a friend with their URL + token</td></tr>
+<tr><td>7</td><td>Both</td><td>Can now browse each other's shared links (read-only)</td></tr>
+</table>
+
+<h3>Important Notes</h3>
+<ul style="margin:8px 0 8px 20px;color:#bbb">
+<li><strong>Read-only:</strong> Friends can only view your links — never edit, delete, or add</li>
+<li><strong>Live data:</strong> Links are fetched fresh each time — not cached or stored</li>
+<li><strong>Revocable:</strong> Delete your share token and the friend loses access instantly</li>
+<li><strong>Private links:</strong> Never exposed through shares, regardless of scope</li>
+<li><strong>No account needed:</strong> The share token is the only credential</li>
+<li><strong>Self-hosted:</strong> Data stays on each person's server — no central service</li>
+</ul>
+
+<h3>Testing Locally (Docker Networking)</h3>
+<p>When testing the friends feature on the same machine (adding yourself as a friend), you <strong>cannot</strong> use <code>localhost:8098</code> as the instance URL. The backend runs inside a Docker container, and <code>localhost</code> inside that container refers to itself — not your host machine.</p>
+
+<p><strong>Use the Docker internal hostname instead:</strong></p>
+<pre>http://ironylabs_gateway:8098</pre>
+
+<p>This is the container name on Docker's internal network. The backend can reach it because all containers share the same Docker Compose network.</p>
+
+<table>
+<tr><th>Scenario</th><th>Instance URL to Use</th></tr>
+<tr><td>Testing on same machine (self as friend)</td><td><code>http://ironylabs_gateway:8098</code></td></tr>
+<tr><td>Friend on same local network</td><td><code>http://192.168.x.x:8098</code> (their LAN IP)</td></tr>
+<tr><td>Friend on the internet (production)</td><td><code>https://friend-domain.com</code> (their public URL)</td></tr>
+</table>
+
+<p><strong>In production</strong> (deployed on separate VPSes with domains), you use the actual public URL — this issue only affects local Docker testing.</p>
+
+<h3>Troubleshooting Friends</h3>
+<table>
+<tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+<tr><td>"All connection attempts failed"</td><td>Backend can't reach the friend URL from inside Docker</td><td>Use Docker internal hostname or friend's public domain (not <code>localhost</code>)</td></tr>
+<tr><td>"Friend's server returned 404"</td><td>Invalid share token</td><td>Verify the token is correct and hasn't been revoked</td></tr>
+<tr><td>"Friend's server timed out"</td><td>Friend's server is down or unreachable</td><td>Check friend's server is running and URL is correct</td></tr>
+<tr><td>"Could not reach friend"</td><td>Network issue or invalid URL</td><td>Verify URL includes protocol (<code>http://</code> or <code>https://</code>)</td></tr>
+</table>
+
+<h3>Without Their Own Instance (Simple Viewer)</h3>
+<p>Friends who don't run Memex can still view your shared links — just send them the share URL directly:</p>
+<pre>https://yoursite.com/shared.html?token=YOUR_TOKEN</pre>
+<p>They'll see a simple, styled card grid of your shared links. No login, no install. Works on any device.</p>
+
+<h3>Connecting via Cloudflare Tunnel</h3>
+<p>If both instances are behind Cloudflare Tunnels (no public ports), the connection works transparently:</p>
+<ol style="margin:8px 0 8px 20px;color:#bbb">
+<li>Both instances exposed via tunnel (e.g. <code>https://yourdomain.com</code>, <code>https://frienddomain.com</code>)</li>
+<li>You create a share → send friend your domain + token</li>
+<li>Friend adds you in their 👥 Friends panel using your <code>https://</code> URL</li>
+<li>Friend clicks Test → their backend fetches from your tunnel → works</li>
+</ol>
+
+<p><strong>Why it works:</strong> The friend fetch is server-to-server (your backend → HTTPS → Cloudflare → friend's VPS). It's a standard HTTPS GET request — Cloudflare Tunnel handles it like any web traffic. No ports to open, no CORS issues, no special configuration.</p>
+
+<p><strong>Verify from terminal:</strong></p>
+<pre>curl https://frienddomain.com/api/shared/THEIR_TOKEN</pre>
+<p>If that returns JSON with links, the connection works.</p>
+
+<p><strong>Cloudflare WAF note:</strong> If Cloudflare's Web Application Firewall is set to strict mode, it might block API requests from servers. Check your Cloudflare dashboard → Security → WAF and ensure <code>/api/*</code> paths aren't being challenged.</p>
+
+<h2 id="recent-changes">Recent Modifications Summary</h2>
+<p>Features added in the latest development session (2026-07-04):</p>
+
+<h3>Phase 1 — Quick Wins</h3>
+<table>
+<tr><th>Feature</th><th>How to Use</th></tr>
+<tr><td>Duplicate Detection</td><td>Automatic — adding an existing URL shows 409 error with the duplicate's title</td></tr>
+<tr><td>Public Profile Page</td><td><code>GET /api/about</code> returns site info + link/category/click stats</td></tr>
+<tr><td>Activity Feed</td><td><code>GET /api/activity</code> returns 10 most recently added links</td></tr>
+<tr><td>Pin Links to Top</td><td>Admin: set <code>pinned: true</code> — pinned links sort first on public page</td></tr>
+<tr><td>Archive View</td><td>Admin: <code>GET /api/admin/archived</code> shows inactive/dead links</td></tr>
+<tr><td>Wayback Machine</td><td>Admin: <code>POST /admin/links/{id}/wayback</code> generates web.archive.org URL</td></tr>
+<tr><td>Custom CSS Injection</td><td>Admin: ⚙️ Settings → save custom CSS that applies to public page</td></tr>
+<tr><td>Webhook Notifications</td><td>Admin: ⚙️ Settings → set a Discord/Slack webhook URL → notifies on link add</td></tr>
+<tr><td>Referrer Tracking</td><td>Admin: <code>GET /admin/referrers</code> shows top 20 traffic sources</td></tr>
+<tr><td>API Keys</td><td>Admin: create keys for scripts/bots. Use <code>POST /api/api-key/links</code> with X-API-Key header</td></tr>
+<tr><td>Rate Limiting</td><td>Automatic — 60 clicks/minute per IP on the click endpoint</td></tr>
+</table>
+
+<h3>Phase 2 — Medium Features</h3>
+<table>
+<tr><th>Feature</th><th>How to Use</th></tr>
+<tr><td>Upvote/Reactions</td><td>Public: <code>POST /api/links/{id}/upvote</code> — anonymous 👍 counter</td></tr>
+<tr><td>Auto-Tagging</td><td>Admin: <code>POST /admin/links/{id}/auto-tag</code> fetches page meta keywords + OG data</td></tr>
+<tr><td>Link Preview Cards</td><td>Stored in <code>og_image</code> and <code>og_title</code> fields after auto-tag</td></tr>
+<tr><td>Bulk Actions</td><td>Admin: <code>POST /admin/bulk-action</code> with <code>{ids:[...], action:"set_category", value:"Music"}</code></td></tr>
+<tr><td>Click Heatmap</td><td>Admin: <code>GET /admin/click-heatmap</code> returns clicks by hour (0-23) and day (Mon-Sun)</td></tr>
+<tr><td>Audit Log</td><td>Admin: <code>GET /admin/audit-log</code> shows last 100 admin actions</td></tr>
+<tr><td>Link Expiration</td><td>Admin: <code>PUT /admin/links/{id}/expires</code> with ISO date string. Expired links auto-hidden</td></tr>
+<tr><td>Export to Markdown</td><td>Admin: <code>GET /admin/export/markdown</code> downloads Obsidian/Notion-compatible .md file</td></tr>
+<tr><td>Visitor Dark/Light</td><td>Client-side toggle (localStorage). Backend: <code>GET /api/settings/visitor-prefs</code></td></tr>
+</table>
+
+<h3>Phase 3 — Complex Features</h3>
+<table>
+<tr><th>Feature</th><th>How to Use</th></tr>
+<tr><td>Comments</td><td>Public: <code>POST /api/links/{id}/comments</code> with <code>{text, author}</code>. Admin can delete + toggle on/off</td></tr>
+<tr><td>Nested Categories</td><td>Set <code>parent_category</code> on links. View tree: <code>GET /api/categories/tree</code></td></tr>
+<tr><td>Raindrop.io Import</td><td>Admin: <code>POST /admin/import/raindrop</code> with Raindrop JSON export file</td></tr>
+<tr><td>Pocket Import</td><td>Admin: <code>POST /admin/import/pocket</code> with Pocket HTML export file</td></tr>
+<tr><td>Geographic Stats</td><td>Admin: <code>GET /admin/geo-stats</code> shows clicks by country/IP</td></tr>
+<tr><td>Viewer Accounts</td><td>Admin: create viewers with <code>POST /admin/viewers</code>. They login via <code>POST /viewer/login</code></td></tr>
+<tr><td>Two-Factor Auth</td><td>Admin: <code>POST /admin/settings/totp/setup</code> generates TOTP secret + QR URI</td></tr>
+<tr><td>Link Age vs Clicks</td><td>Admin: <code>GET /admin/age-vs-clicks</code> returns chart data for visualization</td></tr>
+<tr><td>Zapier/IFTTT</td><td>Admin: <code>PUT /admin/settings/integrations</code> to set multiple webhook URLs</td></tr>
+</table>
+
+<h3>Phase 4 — Major Features</h3>
+<table>
+<tr><th>Feature</th><th>How to Use</th></tr>
+<tr><td>Multiple Map Layouts</td><td>Admin: <code>PUT /admin/settings/layout</code> with <code>{layout:"radial"}</code>. Options: force, radial, tree, circular</td></tr>
+<tr><td>Link Screenshots</td><td>Admin: <code>POST /admin/links/{id}/screenshot</code> or <code>POST /admin/screenshots-all</code> (uses thum.io)</td></tr>
+<tr><td>Browser Extension</td><td>Load <code>browser-extension/</code> folder as unpacked in Chrome. One-click save from any page</td></tr>
+</table>
+
+<h3>v2 Backend Features</h3>
+<table>
+<tr><th>Feature</th><th>Platform</th><th>Description</th></tr>
+<tr><td>Private Links</td><td>All</td><td>🔒 toggle hides links from public page/API/RSS</td></tr>
+<tr><td>Reading Queue</td><td>All</td><td>Track read status (to-read/reading/done), public endpoint</td></tr>
+<tr><td>RSS/Atom Feed</td><td>All</td><td><code>/api/rss</code> — subscribe in any reader</td></tr>
+<tr><td>Custom Site Header</td><td>Desktop</td><td>Configurable name, bio, avatar shown on public page</td></tr>
+<tr><td>Collections</td><td>All (Mobile: 📂 button)</td><td>Curated link groups with slug URLs</td></tr>
+<tr><td>Auto-Archive</td><td>Admin</td><td>Dead links auto-deactivated after 3 consecutive failures</td></tr>
+<tr><td>Bookmarks Import</td><td>Admin</td><td>Upload Chrome/Firefox bookmark HTML export</td></tr>
+</table>
+
+<h3>v2 Frontend Features</h3>
+<table>
+<tr><th>Feature</th><th>Platform</th><th>Description</th></tr>
+<tr><td>Screensaver Mode</td><td>Desktop</td><td>Auto-drifting mind map with clock, accessible via ⎋ button</td></tr>
+<tr><td>Pinboard View</td><td>Desktop</td><td>Masonry card layout (📌 button)</td></tr>
+<tr><td>Tag Cloud View</td><td>Desktop</td><td>Weighted tag visualization (☁️ button)</td></tr>
+<tr><td>Link of the Day</td><td>Desktop</td><td>Daily rotating featured link hero card</td></tr>
+<tr><td>Bookmarklet</td><td>Desktop</td><td>Quick-add from any page via bookmarks bar</td></tr>
+<tr><td>Mobile Tag Filter</td><td>Mobile</td><td>🏷 button shows tag pills, tap to filter cards</td></tr>
+<tr><td>Mobile Collections</td><td>Mobile</td><td>📂 button browses collections on mobile</td></tr>
+</table>
+
+<h3>Android Companion App</h3>
+<table>
+<tr><th>Feature</th><th>Description</th></tr>
+<tr><td>Share Intent</td><td>Save links from any app via Android share sheet</td></tr>
+<tr><td>Offline Queue</td><td>Links saved locally when server is unreachable</td></tr>
+<tr><td>Auto-Sync</td><td>Queued links sync when app is opened or reconnected</td></tr>
+<tr><td>Multi-Server</td><td>Connect to any server URL (local or VPS)</td></tr>
+</table>
+
+<h3>Sharing & Federation</h3>
+<table>
+<tr><th>Feature</th><th>Platform</th><th>Description</th></tr>
+<tr><td>Share Tokens</td><td>Admin</td><td>Create private read-only share URLs for any scope</td></tr>
+<tr><td>Standalone Viewer</td><td>All (recipients)</td><td>Shared links render on a viewer page — no login needed</td></tr>
+<tr><td>Friends</td><td>Admin</td><td>Add remote ironyLabs instances, fetch their shared links</td></tr>
+<tr><td>Federated Proxy</td><td>Backend</td><td>Server proxies friend requests to avoid CORS</td></tr>
+<tr><td>Revocable Access</td><td>Admin</td><td>Delete a share token to instantly revoke access</td></tr>
+</table>
+
+<h2 id="troubleshooting">Troubleshooting & Known Quirks</h2>
+
+<h3>Login & Authentication</h3>
+<table>
+<tr><th>Issue</th><th>Cause</th><th>Fix</th></tr>
+<tr><td>Admin login says "Invalid credentials"</td><td>Password in <code>.env</code> doesn't match what you're typing</td><td>Check <code>.env</code> file, restart: <code>docker compose restart backend</code></td></tr>
+<tr><td>Session expired after 24 hours</td><td>JWT tokens expire after 24h by design</td><td>Re-login. Android app: open app and tap Connect. Extension: open Settings and reconnect</td></tr>
+<tr><td>Logged out randomly</td><td>Server restarted with a new <code>SECRET_KEY</code> — invalidates all tokens</td><td>Re-login. Don't change SECRET_KEY after deployment unless you want to force all sessions out</td></tr>
+<tr><td>Bookmarklet stopped working</td><td>Embedded JWT expired (24h)</td><td>Open admin → ⚙️ Settings → the bookmarklet auto-regenerates with your current token</td></tr>
+</table>
+
+<h3>Public Page</h3>
+<table>
+<tr><th>Issue</th><th>Cause</th><th>Fix</th></tr>
+<tr><td>Page loads but mind map is blank</td><td>JavaScript error (check browser console)</td><td>Hard refresh (<kbd>Ctrl+Shift+R</kbd>). If persists, check for JS errors in console</td></tr>
+<tr><td>Pinboard/Tag Cloud showing on mobile</td><td>CSS override issue</td><td>These use <code>!important</code> to hide on mobile. If showing, clear cache and hard refresh</td></tr>
+<tr><td>Theme not applying</td><td>Browser cache serving old CSS variables</td><td>Hard refresh. Theme loads via API on each page load</td></tr>
+<tr><td>Links not appearing after adding</td><td>Link might be set to private, inactive, or expired</td><td>Check in admin that active=true, private=false, and no expiration date set</td></tr>
+<tr><td>Mind map nodes overlapping</td><td>Too many links in one category (>10 visible)</td><td>Pagination caps at 10 per category. Click category to collapse, or zoom out</td></tr>
+<tr><td>Particles/animations missing</td><td>Performance mode triggered (>50 nodes)</td><td>By design — animations disabled above 50 nodes to maintain FPS</td></tr>
+<tr><td>Search not finding a link</td><td>Link might be private</td><td>Private links are excluded from public search. Check admin panel</td></tr>
+</table>
+
+<h3>Mobile</h3>
+<table>
+<tr><th>Issue</th><th>Cause</th><th>Fix</th></tr>
+<tr><td>Cards not loading</td><td>API unreachable or JS error</td><td>Check server is running. Try refreshing page</td></tr>
+<tr><td>Long-press opens context menu instead of notes</td><td>Some Android browsers intercept long-press</td><td>Try a shorter hold (~500ms), or use a different browser. Chrome works best</td></tr>
+<tr><td>Alpha jump nav (A-Z) not showing</td><td>Fewer than 3 unique starting letters</td><td>By design — only shows when there are 3+ distinct first letters</td></tr>
+<tr><td>"Show more" button missing</td><td>Fewer than 15 links in current filter</td><td>By design — only shows when there are more links to load</td></tr>
+</table>
+
+<h3>Android App</h3>
+<table>
+<tr><th>Issue</th><th>Cause</th><th>Fix</th></tr>
+<tr><td>"Connection failed" on Connect</td><td>Wrong URL, server down, or phone not on same network</td><td>Verify server is running. For local dev, phone must be on same WiFi. Use your LAN IP (e.g. <code>192.168.1.x:8098</code>), not <code>localhost</code></td></tr>
+<tr><td>App not appearing in share sheet</td><td>Android sometimes delays registering new share targets</td><td>Restart your phone, or force-stop and reopen the app</td></tr>
+<tr><td>"Session expired" on share</td><td>JWT expired (24h)</td><td>Open the app and tap Connect to get a fresh token</td></tr>
+<tr><td>Links queued but not syncing</td><td>Server unreachable at sync time</td><td>Open the app while connected to sync. Auto-syncs on every app open if server is reachable</td></tr>
+<tr><td>Shared URL not extracting correctly</td><td>Some apps share text + URL together</td><td>The app tries to extract URLs via regex. If it fails, manually edit the URL field before saving</td></tr>
+</table>
+
+<h3>Docker / Deployment</h3>
+<table>
+<tr><th>Issue</th><th>Cause</th><th>Fix</th></tr>
+<tr><td>Port not reachable externally</td><td>Firewall blocking the port</td><td><code>sudo ufw allow 8098/tcp</code> (or whatever port you set in <code>.env</code>)</td></tr>
+<tr><td>Container in "Restarting" loop</td><td>Usually a Python import error</td><td><code>docker compose logs backend</code> to see the traceback</td></tr>
+<tr><td>Data lost after rebuild</td><td>Only happens if you run <code>docker compose down -v</code></td><td>Never use <code>-v</code> flag unless you want to wipe data. Normal rebuilds preserve the volume</td></tr>
+<tr><td>Port already in use</td><td>Another service on that port</td><td>Change <code>APP_PORT</code> in <code>.env</code> to a free port</td></tr>
+<tr><td>502 Bad Gateway</td><td>Backend container hasn't started yet</td><td>Wait 5 seconds and retry. Check <code>docker compose ps</code> — backend should be "Up"</td></tr>
+<tr><td>Uploaded icons not showing</td><td>Path issue or container restart cleared memory</td><td>Uploads are in the persistent volume. If missing, re-upload. Check <code>/api/uploads/</code> is accessible</td></tr>
+</table>
+
+<h3>Browser Extension</h3>
+<table>
+<tr><th>Issue</th><th>Cause</th><th>Fix</th></tr>
+<tr><td>"Not connected" when clicking Save</td><td>Never connected or token expired</td><td>Click ⚙ Settings → enter server URL + password → Connect</td></tr>
+<tr><td>Extension not showing in toolbar</td><td>Hidden by Chrome</td><td>Click the puzzle icon → pin "Memex Link Saver"</td></tr>
+<tr><td>CORS error in console</td><td>Server has restrictive CORS</td><td>The backend already allows all origins (<code>*</code>). If behind a proxy, ensure it passes headers through</td></tr>
+<tr><td>"duplicate" warning on every save</td><td>URL already exists in database</td><td>Expected behavior — duplicate detection working correctly. Edit existing link instead</td></tr>
+</table>
+
+<h3>Sharing & Friends</h3>
+<table>
+<tr><th>Issue</th><th>Cause</th><th>Fix</th></tr>
+<tr><td>Share URL shows "Share not found"</td><td>Token was revoked or typo in URL</td><td>Create a new share in admin. Double-check the token in the URL</td></tr>
+<tr><td>Friend test says "connection failed"</td><td>Using <code>localhost</code> from inside Docker</td><td>Use Docker internal name (<code>ironylabs_gateway:8098</code>) for self-test, or friend's real public URL</td></tr>
+<tr><td>Friend's links empty</td><td>Their share is scoped to a category/collection with no links</td><td>Ask friend to verify their share has links. Try share type "all"</td></tr>
+<tr><td>Friends feature not working cross-server</td><td>Friend's server doesn't have CORS allowing your domain</td><td>Doesn't matter — your backend proxies the request, so CORS is irrelevant</td></tr>
+</table>
+
+<h3>General Quirks</h3>
+<table>
+<tr><th>Quirk</th><th>Explanation</th></tr>
+<tr><td>Clicking a link tracks the click even if the popup is blocked</td><td>Click tracking fires before <code>window.open</code>. If popups are blocked, the click still counts</td></tr>
+<tr><td>Health check shows "error" for sites behind Cloudflare</td><td>Some sites block HEAD requests. The link might work fine in a browser</td></tr>
+<tr><td>Auto-tag returns empty for some sites</td><td>Sites that render via JavaScript (SPAs) don't have meta tags in the initial HTML</td></tr>
+<tr><td>QR code doesn't scan on some phones</td><td>Dark orange on white can have low contrast for old cameras</td><td>Try holding phone steady and closer</td></tr>
+<tr><td>RSS feed shows timestamps as "Z" suffix</td><td>UTC timezone — correct behavior, readers handle conversion</td></tr>
+<tr><td>Exported markdown has links marked (archived) or (private)</td><td>Export includes ALL links. Archive/private status is noted but included</td></tr>
+<tr><td>Screensaver drift sometimes goes off-screen</td><td>The oscillation math occasionally drifts far on ultra-wide monitors</td><td>Click ← Exit and reopen — it resets</td></tr>
+<tr><td>Two instances can't share the same Docker volume name</td><td>If running two copies on same machine, rename volumes in docker-compose.yml</td></tr>
+</table>
+
+<hr style="margin:48px 0;border:none;border-top:1px solid rgba(255,122,41,0.15)">
+<p style="text-align:center;color:rgba(255,122,41,0.4);font-size:12px">ironyLabs Links Memex — Built 2026-07-04</p>
+
+</div>
+</body>
+</html>

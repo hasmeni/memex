@@ -1,0 +1,31 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+standalone/venv/
+standalone/data/
+
+# Android build
+android/app/build/
+android/build/
+android/.gradle/
+*.apk
+
+# Node (if any)
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Docker data (local only)
+db_data/

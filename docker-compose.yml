@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: ironylabs_api
+    restart: unless-stopped
+    volumes:
+      - db_data:/app/data
+    environment:
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-123456}
+      - SECRET_KEY=${SECRET_KEY:-change-this-tu-raas}
+
+  frontend:
+    build: ./frontend
+    container_name: ironylabs_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+  gateway:
+    image: nginx:alpine
+    container_name: ironylabs_gateway
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8098}:${APP_PORT:-8098}"
+    volumes:
+      - ./nginx/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+    environment:
+      - APP_PORT=${APP_PORT:-8098}
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  db_data:

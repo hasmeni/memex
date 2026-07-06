@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memex — Usage Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:radial-gradient(ellipse at center,#1a1a1a 0%,#0a0a0a 60%,#000 100%);color:#e0e0e0;line-height:1.7;min-height:100vh;overflow-x:hidden}
+
+/* Ambient glow */
+body::before{content:'';position:fixed;width:70vmin;height:70vmin;border-radius:50%;background:radial-gradient(circle,rgba(255,122,41,0.08) 0%,rgba(255,122,41,0) 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:drift 14s ease-in-out infinite;z-index:0}
+@keyframes drift{0%{transform:translate(calc(-50% - 2%),calc(-50% - 1%)) scale(1)}50%{transform:translate(calc(-50% + 2%),calc(-50% + 1.5%)) scale(1.08)}100%{transform:translate(calc(-50% - 2%),calc(-50% - 1%)) scale(1)}}
+
+/* Particles */
+.particle{position:fixed;border-radius:50%;background:#FF7A29;opacity:0.2;filter:blur(0.5px);animation:floatUp linear infinite;pointer-events:none;z-index:0}
+@keyframes floatUp{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:0.25}90%{opacity:0.15}100%{transform:translateY(-40vh) translateX(20px);opacity:0}}
+
+.container{max-width:860px;margin:0 auto;padding:40px 20px 80px;position:relative;z-index:1}
+
+h1{font-family:'Caveat',cursive;font-size:42px;color:#FF7A29;font-weight:700;text-align:center;margin-bottom:4px}
+.subtitle{text-align:center;color:#FFA35C;font-size:13px;opacity:0.7;letter-spacing:1px;margin-bottom:40px}
+
+h2{font-family:'Caveat',cursive;font-size:28px;color:#FF7A29;margin-top:48px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(255,122,41,0.2)}
+h3{font-size:16px;color:#FFA35C;margin-top:24px;margin-bottom:10px;font-weight:500}
+p{margin-bottom:12px;color:#bbb;font-size:14px}
+strong{color:#FFA35C}
+
+code{background:rgba(255,122,41,0.1);padding:2px 6px;border-radius:4px;font-size:13px;color:#FFA35C}
+pre{background:rgba(255,122,41,0.04);border:1px solid rgba(255,122,41,0.15);border-radius:14px;padding:16px 20px;overflow-x:auto;margin:12px 0;font-size:13px;color:#ddd;backdrop-filter:blur(6px)}
+
+/* Glassmorphism cards for tables */
+table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;background:rgba(255,122,41,0.03);border:1px solid rgba(255,122,41,0.12);border-radius:14px;overflow:hidden;backdrop-filter:blur(6px)}
+th,td{padding:10px 14px;text-align:left;font-size:13px;border-bottom:1px solid rgba(255,122,41,0.08)}
+th{background:rgba(255,122,41,0.08);color:#FFA35C;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.5px}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,122,41,0.03)}
+
+kbd{background:rgba(255,122,41,0.12);border:1px solid rgba(255,122,41,0.3);border-radius:4px;padding:2px 6px;font-size:11px;color:#FFA35C;font-family:'Inter',sans-serif}
+
+ol,ul{margin:8px 0 12px 20px;color:#bbb;font-size:14px}
+li{margin-bottom:4px}
+a{color:#FF7A29;text-decoration:none;transition:color 0.2s}
+a:hover{color:#FFA35C;text-decoration:underline}
+
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;margin-left:6px}
+.badge-desktop{background:rgba(96,165,250,0.15);color:#60a5fa;border:1px solid rgba(96,165,250,0.3)}
+.badge-mobile{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.3)}
+.badge-admin{background:rgba(255,122,41,0.15);color:#FFA35C;border:1px solid rgba(255,122,41,0.3)}
+.badge-all{background:rgba(167,139,250,0.15);color:#c4b5fd;border:1px solid rgba(167,139,250,0.3)}
+
+/* TOC card */
+.toc{background:rgba(255,122,41,0.04);border:1px solid rgba(255,122,41,0.15);border-radius:18px;padding:24px 28px;margin:24px 0;backdrop-filter:blur(8px)}
+.toc h3{margin-top:0;font-family:'Caveat',cursive;font-size:22px}
+.toc ul{list-style:none;columns:2;column-gap:24px;margin:12px 0 0 0}
+.toc li{padding:4px 0;font-size:13px}
+.toc li a{color:#FFA35C;transition:color 0.2s}
+.toc li a:hover{color:#FF7A29}
+
+/* Section cards */
+.card{background:rgba(255,122,41,0.03);border:1px solid rgba(255,122,41,0.12);border-radius:16px;padding:20px 24px;margin:16px 0;backdrop-filter:blur(6px)}
+
+/* Footer */
+.footer{text-align:center;color:rgba(255,122,41,0.3);font-size:11px;margin-top:60px;padding-top:20px;border-top:1px solid rgba(255,122,41,0.1)}
+
+@media(max-width:640px){
+  .toc ul{columns:1}
+  h1{font-size:32px}
+  h2{font-size:24px}
+}
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<div class="container">
+
+<h1>Memex</h1>
+<p class="subtitle">Usage Guide · by ironyLabs</p>
+
+<div class="toc">
+<h3>Contents</h3>
+<ul>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#views">View Modes</a></li>
+<li><a href="#search">Search</a></li>
+<li><a href="#admin">Admin Panel</a></li>
+<li><a href="#links">Managing Links</a></li>
+<li><a href="#sharing">Sharing & Friends</a></li>
+<li><a href="#android">Android App</a></li>
+<li><a href="#extension">Browser Extension</a></li>
+<li><a href="#keyboard">Keyboard Shortcuts</a></li>
+<li><a href="#mobile">Mobile</a></li>
+<li><a href="#config">Configuration</a></li>
+</ul>
+</div>
+
+<h2 id="getting-started">Getting Started</h2>
+<div class="card">
+<p>Memex is a personal link collection displayed as an interactive mind map. Deploy with Docker Compose:</p>
+<pre>cp .env.example .env
+nano .env   # set ADMIN_PASSWORD, SECRET_KEY, APP_PORT
+docker compose up -d --build</pre>
+<p>Access at <code>http://localhost:8098</code> (or your configured port).</p>
+</div>
+
+<table>
+<tr><th>URL</th><th>Purpose</th></tr>
+<tr><td><code>/</code></td><td>Public mind map / pinboard / tag cloud</td></tr>
+<tr><td><code>/admin.html</code></td><td>Admin panel</td></tr>
+<tr><td><code>/screensaver.html</code></td><td>Screensaver mode</td></tr>
+<tr><td><code>/api/rss</code></td><td>RSS/Atom feed</td></tr>
+<tr><td><code>/shared.html?token=...</code></td><td>Shared link viewer</td></tr>
+</table>
+
+<h2 id="views">View Modes <span class="badge badge-desktop">Desktop</span></h2>
+<p>Top-right toggle switches between views. Your preference is saved.</p>
+<table>
+<tr><th>Button</th><th>View</th><th>Description</th></tr>
+<tr><td>🗺</td><td>Mind Map</td><td>Force-directed graph with zoom, pan, collapsible nodes</td></tr>
+<tr><td>📌</td><td>Pinboard</td><td>Masonry card layout with descriptions and tags</td></tr>
+<tr><td>☁️</td><td>Tag Cloud</td><td>Weighted tags — click one to filter</td></tr>
+<tr><td>⎋</td><td>Screensaver</td><td>Auto-drifting map with clock overlay</td></tr>
+</table>
+
+<h2 id="search">Search <span class="badge badge-all">All Platforms</span></h2>
+<div class="card">
+<p>Press <kbd>Ctrl+K</kbd> or <kbd>/</kbd> on desktop. Tap 🔍 on mobile.</p>
+<p>Matches: title, category, description, URL, tags. Arrow keys navigate, Enter opens.</p>
+</div>
+
+<h2 id="admin">Admin Panel</h2>
+<p>Login at <code>/admin.html</code> with username <code>admin</code> and your configured password.</p>
+<table>
+<tr><th>Button</th><th>Function</th></tr>
+<tr><td>⬇ Export</td><td>Download links as JSON</td></tr>
+<tr><td>⬆ Import</td><td>Upload JSON / browser bookmarks</td></tr>
+<tr><td>🩺 Health</td><td>Ping all URLs for dead links</td></tr>
+<tr><td>🎨 Colors</td><td>Category colors + icon upload</td></tr>
+<tr><td>📊 Stats</td><td>Click analytics + heatmap</td></tr>
+<tr><td>🌐 Favicons</td><td>Auto-fetch site icons</td></tr>
+<tr><td>🎭 Theme</td><td>Switch color scheme (5 options)</td></tr>
+<tr><td>⚙️ Settings</td><td>Site header, webhooks, auto-archive, bookmarklet</td></tr>
+<tr><td>📂 Collections</td><td>Create curated link groups</td></tr>
+<tr><td>🔗 Shares</td><td>Create private share tokens</td></tr>
+<tr><td>👥 Friends</td><td>Connect remote instances</td></tr>
+</table>
+
+<h2 id="links">Managing Links</h2>
+<h3>Adding a Link</h3>
+<p>Fill the form: Title, URL (required), Category, Icon, Tags, Notes, Sort Order. Toggle Active, Featured, Private.</p>
+<h3>Per-Link Controls</h3>
+<table>
+<tr><th>Control</th><th>Function</th></tr>
+<tr><td>⋮⋮ handle</td><td>Drag to reorder</td></tr>
+<tr><td>Read status dropdown</td><td>Set to-read / reading / done</td></tr>
+<tr><td>🔒</td><td>Toggle private (hide from public)</td></tr>
+<tr><td>QR</td><td>Generate QR code</td></tr>
+<tr><td>Edit</td><td>Load into form</td></tr>
+<tr><td>Delete</td><td>Remove permanently</td></tr>
+</table>
+
+<h2 id="sharing">Sharing & Friends</h2>
+<h3>Create a Share</h3>
+<ol>
+<li>Admin → 🔗 Shares → enter name + scope → Create</li>
+<li>Copy the token URL</li>
+<li>Send to friend (URL + token)</li>
+</ol>
+<h3>Add a Friend</h3>
+<ol>
+<li>Admin → 👥 Friends → enter name + their URL + their token → Add</li>
+<li>Click Test to verify</li>
+</ol>
+<div class="card">
+<p><strong>Cloudflare Tunnel:</strong> Works transparently. The fetch is server-to-server HTTPS — no special config needed.</p>
+</div>
+
+<h2 id="android">Android App <span class="badge badge-mobile">Mobile</span></h2>
+<ol>
+<li>Install <code>Memex-Share-debug.apk</code></li>
+<li>Open → enter server URL + password → Connect</li>
+<li>Share any link from any app → "Save to Memex"</li>
+</ol>
+<p>Offline queue: if server is unreachable, links save locally and auto-sync when reconnected.</p>
+
+<h2 id="extension">Browser Extension <span class="badge badge-desktop">Desktop</span></h2>
+<h3>Chrome / Edge / Brave</h3>
+<ol>
+<li><code>chrome://extensions</code> → Developer mode → Load unpacked → select <code>browser-extension/</code></li>
+</ol>
+<h3>Firefox</h3>
+<ol>
+<li><code>about:debugging</code> → Load Temporary Add-on → select <code>manifest.json</code></li>
+</ol>
+<p>Click extension icon → Settings → enter URL + password → Connect. Then click on any page to save.</p>
+
+<h2 id="keyboard">Keyboard Shortcuts</h2>
+<table>
+<tr><th>Key</th><th>Action</th></tr>
+<tr><td><kbd>Ctrl+K</kbd> / <kbd>/</kbd></td><td>Open search</td></tr>
+<tr><td><kbd>ESC</kbd></td><td>Close search / notes</td></tr>
+<tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td>Navigate results</td></tr>
+<tr><td><kbd>Enter</kbd></td><td>Open selected</td></tr>
+<tr><td>Scroll wheel</td><td>Zoom map</td></tr>
+<tr><td>Double-click node</td><td>QR code</td></tr>
+<tr><td>Right-click node</td><td>Open notes</td></tr>
+</table>
+
+<h2 id="mobile">Mobile Gestures</h2>
+<table>
+<tr><th>Gesture</th><th>Action</th></tr>
+<tr><td>Tap card</td><td>Open link</td></tr>
+<tr><td>Long-press (600ms)</td><td>Open notes</td></tr>
+<tr><td>Tap 🔍</td><td>Search</td></tr>
+<tr><td>Tap 🏷</td><td>Filter by tag</td></tr>
+<tr><td>Tap 📂</td><td>Browse collections</td></tr>
+<tr><td>Tap sort button</td><td>Change order</td></tr>
+<tr><td>Tap A-Z letter</td><td>Jump to section</td></tr>
+</table>
+
+<h2 id="config">Configuration</h2>
+<div class="card">
+<p>Everything in <code>.env</code>:</p>
+<pre>ADMIN_PASSWORD=your_password
+SECRET_KEY=long_random_string
+APP_PORT=8098</pre>
+<p>Change port, restart: <code>docker compose down && docker compose up -d</code></p>
+</div>
+
+<div class="footer">Memex · by ironyLabs · 2026</div>
+
+</div>
+
+<script>
+// Spawn particles
+const body = document.body;
+for(let i=0;i<18;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  const s=2+Math.random()*3;
+  p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}vw;top:${60+Math.random()*40}vh`;
+  const d=12+Math.random()*14;
+  p.style.animationDuration=d+'s';
+  p.style.animationDelay=(Math.random()*d)+'s';
+  body.appendChild(p);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="32dp" android:gravity="center_horizontal"
+    android:background="#0A0A0A">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Memex" android:textSize="42sp" android:textColor="#FF7A29"
+        android:fontFamily="cursive" android:layout_marginTop="60dp"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Connect to your instance" android:textSize="14sp"
+        android:textColor="#FFA35C" android:layout_marginBottom="40dp"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" android:hint="Server URL">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editServerUrl" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:inputType="textUri"
+            android:textColor="#FFFFFF" android:text="http://192.168.1.100:8098"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp" android:hint="Admin Password">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editPassword" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:inputType="textPassword"
+            android:textColor="#FFFFFF"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogin" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Connect"
+        android:backgroundTint="#FF7A29" android:textColor="#000000"/>
+</LinearLayout>
