@@ -2,6 +2,8 @@
 <img width="819" height="400" alt="memex_caveat_feature_graphic" src="https://github.com/user-attachments/assets/883d518d-e0fe-430f-be94-2d3267e1c777" />
 
 A self-hosted personal link collection rendered as an animated mind map, with multi-view modes, sharing/federation, an Android companion app, and browser extension.
+Taking inspiration from mindmaps, Linkding, Hoarder? Kerakeep, readeck, the fediverse Flame dashboard. Use it as a links bio page, dashboard, bookmark aggregator and more.
+Share your board with friends. Save links while you browse the web or connect to your instance with the android app. 
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen)
 ![Docker](https://img.shields.io/badge/docker-compose-blue)
