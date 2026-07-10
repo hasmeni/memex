@@ -79,6 +79,12 @@ APK output: `android/app/build/outputs/apk/debug/app-debug.apk`
 
 Load `browser-extension/` as unpacked extension in Chrome/Edge/Firefox.
 
+
+## TO DO
+
+- ** Partial sharing works but sharing Memex live instances with approved friends so they can view or if you give them permission, modify your web from their instance. In other words
+     friends see your web as a branch within their memex instance. 
+
 ## Tech Stack
 
 - **Backend:** Python 3.11, FastAPI, SQLAlchemy, SQLite
