@@ -1,5 +1,5 @@
 # Memex
-<img width="819" height="400" alt="memex_caveat_feature_graphic" src="https://github.com/user-attachments/assets/883d518d-e0fe-430f-be94-2d3267e1c777" />
+<img width="1024" height="500" alt="memex_feature_graphic_1024x500" src="https://github.com/user-attachments/assets/e7f6c43c-8128-47e2-9e6b-17d78475f7a6" />
 
 A self-hosted personal link collection rendered as an animated mind map, with multi-view modes, sharing/federation, an Android companion app, and browser extension.
 Taking inspiration from mindmaps, Linkding, Hoarder? Kerakeep, readeck, the fediverse Flame dashboard. Use it as a links bio page, dashboard, bookmark aggregator and more.
