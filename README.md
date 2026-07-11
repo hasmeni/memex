@@ -32,7 +32,7 @@ Share your board with friends. Save links while you browse the web or connect to
 
 <img width="2573" height="1574" alt="main-page-with-links" src="https://github.com/user-attachments/assets/5726bab0-6101-4b4b-9e38-94ec4a4473ed" />
 <img width="1705" height="1501" alt="memex-admin-page-links-view" src="https://github.com/user-attachments/assets/31e096d0-4636-415a-8c4c-9eebc4271ce0" />
-<img width="1700" height="1526" alt="memex-admin-page-friends-shared-instances-setup" src="https://github.com/user-attachments/assets/0818fc8a-6849-4270-a810-ca0c47ebd4cc" />
+<img width="1700" height="1526" alt="memex-admin-page-friends-shared-instances-setup" src="https://github.com/user-attachments/assets/d42636af-29f8-4ede-b68b-d418da926c79" />
 <img width="2626" height="1549" alt="main-page-with-links-pinterest-view" src="https://github.com/user-attachments/assets/736d5c25-ef23-4b47-a0cf-6e4d831e8c6c" />
 
 
