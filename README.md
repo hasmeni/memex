@@ -23,10 +23,22 @@ Share your board with friends. Save links while you browse the web or connect to
 -  **Notes** — Markdown notes per link
 -  **Health Checker** — Auto-detect dead links
 -  **RSS Feed** — Atom 1.0 syndication
--  **Android App** — Share links from any app
+-  **Android App** — Share links from any app ( Both full all and simple companion application)
 -  **Browser Extension** — Chrome + Firefox one-click save
 -  **QR Codes** — Generate for any link
 -  **API Keys** — Programmatic access for scripts/bots
+
+## Screenshots
+
+<img width="2573" height="1574" alt="main-page-with-links" src="https://github.com/user-attachments/assets/5726bab0-6101-4b4b-9e38-94ec4a4473ed" />
+<img width="1705" height="1501" alt="memex-admin-page-links-view" src="https://github.com/user-attachments/assets/31e096d0-4636-415a-8c4c-9eebc4271ce0" />
+<img width="1700" height="1526" alt="memex-admin-page-friends-shared-instances-setup" src="https://github.com/user-attachments/assets/0818fc8a-6849-4270-a810-ca0c47ebd4cc" />
+<img width="2626" height="1549" alt="main-page-with-links-pinterest-view" src="https://github.com/user-attachments/assets/736d5c25-ef23-4b47-a0cf-6e4d831e8c6c" />
+
+
+
+
+
 
 ## Quick Start
 
